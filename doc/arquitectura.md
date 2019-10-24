@@ -23,3 +23,5 @@ graph LR;
     MIC((MIC))
     SPEAKER((SPEAKER))
 ```
+
+![arquitectura.png](arquitectura.png)
