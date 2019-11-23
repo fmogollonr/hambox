@@ -1,3 +1,4 @@
 flask
 flask_restful_jsonschema
 flask_restful_url_generator
+ffmpy
