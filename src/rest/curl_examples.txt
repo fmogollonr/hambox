@@ -1,0 +1,4 @@
+Get freq
+curl -i http://localhost:5000/hambox/freq
+Set freq
+curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/freq -d '{"freq":"144.500"}'
