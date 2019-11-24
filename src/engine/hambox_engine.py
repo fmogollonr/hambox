@@ -1,20 +1,19 @@
 import os
-import sys
 import threading
 from threading import Thread
 import time
 import ffmpy, subprocess
-#sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pycode'))
-import logger
+from .logger import Logger
 
 
-class hamboxEngine:
+class HamboxEngine:
 
     def __init__(self):
         self.log = {}
-        self.log = logger.logger("cast2bandFFmpegsystem")
+        self.log = Logger.logger("HamboxEngine")
 
-    def alsaInout(self, inputHw, outputHw):
+    @staticmethod
+    def alsa_inout(inputHw, outputHw):
         ff = ffmpy.FFmpeg(
             inputs={input: ["-hide_banner", "-re", "hw:" + str(inputHw)]},
             outputs={output: ["-f", "alsa", "hw:" + str(outputHw)]}
@@ -28,6 +27,6 @@ class hamboxEngine:
             raise err
 
     def tx(self):
-        self.alsaInout("1:0", "1:1")
+        self.alsa_inout("1:0", "1:1")
         print("finished")
         return

@@ -19,13 +19,14 @@ except ImportError:
     from systemd.journal import JournaldLogHandler as JournalHandler
 import inspect
 
-class logger:
-    def __init__(self,logname):
+
+class Logger:
+    def __init__(self, logname):
         self.log = {}
         self.log = logging.getLogger(logname)
         self.log.addHandler(JournalHandler())
 
-    def sendLog(self, logLevel, logMessage):
+    def send_log(self, logLevel, logMessage):
         if logLevel is "info":
             self.log.setLevel(logging.INFO)
             self.log.info(logMessage)
