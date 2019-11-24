@@ -15,6 +15,21 @@ class Config:
             hambox = data['hambox']
             return hambox
 
+    def set_freq(self, freq):
+        hambox = self.read_config()
+        self.write_config(freq, hambox['mode'], hambox['status'])
+        return
+
+    def set_mode(self, mode):
+        hambox = self.read_config()
+        self.write_config(hambox['freq'], mode, hambox['status'])
+        return
+
+    def set_status(self, status):
+        hambox = self.read_config()
+        self.write_config(hambox['freq'], hambox['mode'], status)
+        return
+
     def write_config(self, freq, mode, status):
         hambox = {'hambox':{'freq': freq, 'mode': mode, 'status': status}}
         with open(self.config_path, 'w') as outfile:

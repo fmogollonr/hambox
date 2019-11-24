@@ -31,7 +31,8 @@ def set_hambox():
     if not request.json:
         abort(400)
     if request.json['freq'] and request.json['mode'] and request.json['status']:
-        set_config(request.json['freq'], request.json['mode'], request.json['status'])
+        config = Config()
+        config.set_config(request.json['freq'], request.json['mode'], request.json['status'])
     return jsonify({'hambox': "OK"})
 
 
@@ -43,11 +44,47 @@ def get_freq():
 
 @app.route('/hambox/freq', methods=['POST'])
 def set_freq():
-    if not request.json:
-        abort(400)
+    try:
+        request.json['freq']
+        config = Config()
+        config.set_freq(request.json['freq'])
+        return get_hambox()
+    except:
+        return jsonify({'hambox': 'no_freq_sent'})
+
+
+@app.route('/hambox/status', methods=['GET'])
+def get_status():
     hambox_json = get_config()
-    hambox_json['freq'] = request.json['freq']
-    return jsonify({'freq': hambox_json['freq']})
+    return jsonify({'status': hambox_json['status']})
+
+
+@app.route('/hambox/status', methods=['POST'])
+def set_status():
+    try:
+        request.json['status']
+        config = Config()
+        config.set_status(request.json['status'])
+        return get_hambox()
+    except:
+        return jsonify({'hambox': 'no_status_sent'})
+
+
+@app.route('/hambox/mode', methods=['GET'])
+def get_mode():
+    hambox_json = get_config()
+    return jsonify({'mode': hambox_json['mode']})
+
+
+@app.route('/hambox/mode', methods=['POST'])
+def set_mode():
+    try:
+        request.json['mode']
+        config = Config()
+        config.set_mode(request.json['mode'])
+        return get_hambox()
+    except:
+        return jsonify({'hambox': 'no_mode_sent'})
 
 
 if __name__ == '__main__':
