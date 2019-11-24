@@ -2,3 +2,7 @@ Get freq
 curl -i http://localhost:5000/hambox/freq
 Set freq
 curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/freq -d '{"freq":"144.500"}'
+get hambox config
+curl -i http://localhost:5000/hambox/config
+set hambox config
+curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/config -d '{"freq":"142.500","mode":"FM","status":"TX"}'
