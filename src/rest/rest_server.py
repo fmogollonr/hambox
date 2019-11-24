@@ -14,7 +14,7 @@ def get_config():
     return hambox_json
 
 
-@app.route('/hambox/status', methods=['GET'])
+@app.route('/hambox/config', methods=['GET'])
 def get_hambox():
     hambox_json = get_config()
     return jsonify({'hambox': hambox_json})
