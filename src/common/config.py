@@ -15,6 +15,10 @@ class Config:
             hambox = data['hambox']
             return hambox
 
-    def write_config(self):
+    def write_config(self, freq, mode, status):
+        hambox = {'hambox':{'freq': freq, 'mode': mode, 'status': status}}
+        with open(self.config_path, 'w') as outfile:
+            json.dump(hambox, outfile)
+
         self.log.send_log("debug", "Writing file")
         return
