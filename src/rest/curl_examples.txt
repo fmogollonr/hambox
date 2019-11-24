@@ -6,3 +6,9 @@ get hambox config
 curl -i http://localhost:5000/hambox/config
 set hambox config
 curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/config -d '{"freq":"142.500","mode":"FM","status":"TX"}'
+set freq config
+curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/freq -d '{"freq":"144.100"}'
+set mode config
+curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/mode -d '{"mode":"SSTV"}'
+set status config
+curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/status -d '{"status":"RX"}'
