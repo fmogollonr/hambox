@@ -8,25 +8,32 @@ class Config:
         self.log = Logger("HamboxConfig")
         self.config_path = "../common/config.json"
 
-    def read_config(self):
-        self.log.send_log("debug", "Reading file")
+    def read_hambox_config(self):
+        self.log.send_log("debug", "read_hambox_config")
         with open(self.config_path) as json_file:
             data = json.load(json_file)
             hambox = data['hambox']
             return hambox
 
+    def read_audio_config(self):
+        self.log.send_log("debug", "read_audio_config")
+        with open(self.config_path) as json_file:
+            data = json.load(json_file)
+            audio_conf = data['audioconf']
+            return audio_conf
+
     def set_freq(self, freq):
-        hambox = self.read_config()
+        hambox = self.read_hambox_config()
         self.write_config(freq, hambox['mode'], hambox['status'])
         return
 
     def set_mode(self, mode):
-        hambox = self.read_config()
+        hambox = self.read_hambox_config()
         self.write_config(hambox['freq'], mode, hambox['status'])
         return
 
     def set_status(self, status):
-        hambox = self.read_config()
+        hambox = self.read_hambox_config()
         self.write_config(hambox['freq'], hambox['mode'], status)
         return
 

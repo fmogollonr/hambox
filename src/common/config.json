@@ -1,5 +1,13 @@
-{"hambox" : {
-    "freq": "144.500",
-    "mode": "SSTV",
-    "status": "TX"
-}}
+{
+   "hambox":{
+      "freq":"144.0",
+      "mode":"SSTV",
+      "status":"TX"
+   },
+   "audioconf":{
+      "tx_in":"1:0",
+      "tx_out":"1:1",
+      "rx_in":"0:0",
+      "rx_out":"0:1"
+   }
+}

@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 def get_config():
     config = Config()
-    hambox_json = config.read_config()
+    hambox_json = config.read_hambox_config()
     return hambox_json
 
 
@@ -87,5 +87,27 @@ def set_mode():
         return jsonify({'hambox': 'no_mode_sent'})
 
 
+# @app.route('/hambox/TX', methods=['POST'])
+# def set_tx():
+#     try:
+#         request.json['mode']
+#         config = Config()
+#         config.set_mode(request.json['mode'])
+#         return get_hambox()
+#     except:
+#         return jsonify({'hambox': 'no_mode_sent'})
+#
+#
+# @app.route('/hambox/TR', methods=['POST'])
+# def set_rx():
+#     try:
+#         request.json['mode']
+#         config = Config()
+#         config.set_mode(request.json['mode'])
+#         return get_hambox()
+#     except:
+#         return jsonify({'hambox': 'no_mode_sent'})
+#
+#
 if __name__ == '__main__':
     app.run(debug=True)
