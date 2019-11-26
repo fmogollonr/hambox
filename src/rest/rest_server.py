@@ -8,6 +8,8 @@ from src.engine.hambox_engine import HamboxEngine
 
 app = Flask(__name__)
 
+engine = HamboxEngine()
+
 
 def get_config():
     config = Config()
@@ -97,14 +99,12 @@ def get_audioconfig():
 
 @app.route('/hambox/TX', methods=['POST'])
 def set_tx():
-    engine = HamboxEngine()
     engine.tx()
     return jsonify({'TX': 'OK'})
 
 
 @app.route('/hambox/RX', methods=['POST'])
-def set_tx():
-    engine = HamboxEngine()
+def set_rx():
     engine.rx()
     return jsonify({'RX': 'OK'})
 
