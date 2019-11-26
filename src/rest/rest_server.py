@@ -4,6 +4,7 @@ from flask import request
 import json
 from src.common.logger import Logger
 from src.common.config import Config
+from src.engine.hambox_engine import HamboxEngine
 
 app = Flask(__name__)
 
@@ -90,31 +91,23 @@ def set_mode():
 @app.route('/hambox/audioconfig', methods=['GET'])
 def get_audioconfig():
     config = Config()
-    audioconfig_json = config.read_audio_config()
-    return jsonify({'audioconfig': audioconfig_json})
+    audioconfig = config.read_audio_config()
+    return jsonify({'audioconfig': audioconfig})
 
 
-# @app.route('/hambox/TX', methods=['POST'])
-# def set_tx():
-#     try:
-#         request.json['mode']
-#         config = Config()
-#         config.set_mode(request.json['mode'])
-#         return get_hambox()
-#     except:
-#         return jsonify({'hambox': 'no_mode_sent'})
-#
-#
-# @app.route('/hambox/TR', methods=['POST'])
-# def set_rx():
-#     try:
-#         request.json['mode']
-#         config = Config()
-#         config.set_mode(request.json['mode'])
-#         return get_hambox()
-#     except:
-#         return jsonify({'hambox': 'no_mode_sent'})
-#
-#
+@app.route('/hambox/TX', methods=['POST'])
+def set_tx():
+    engine = HamboxEngine()
+    engine.tx()
+    return jsonify({'TX': 'OK'})
+
+
+@app.route('/hambox/RX', methods=['POST'])
+def set_tx():
+    engine = HamboxEngine()
+    engine.rx()
+    return jsonify({'RX': 'OK'})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
