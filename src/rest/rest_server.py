@@ -87,6 +87,13 @@ def set_mode():
         return jsonify({'hambox': 'no_mode_sent'})
 
 
+@app.route('/hambox/audioconfig', methods=['GET'])
+def get_audioconfig():
+    config = Config()
+    audioconfig_json = config.read_audio_config()
+    return jsonify({'audioconfig': audioconfig_json})
+
+
 # @app.route('/hambox/TX', methods=['POST'])
 # def set_tx():
 #     try:
