@@ -103,6 +103,18 @@ def set_tx():
     return jsonify({'TX': 'OK'})
 
 
+@app.route('/hambox/REC', methods=['POST'])
+def rec():
+    file_name = engine.rec()
+    return jsonify({'hambox': file_name})
+
+
+@app.route('/hambox/REC', methods=['DELETE'])
+def stop_rec():
+    engine.stop_rec()
+    return jsonify({'hambox': 'STOP_REC'})
+
+
 @app.route('/hambox/RX', methods=['POST'])
 def set_rx():
     engine.rx()

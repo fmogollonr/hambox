@@ -2,12 +2,13 @@
    "hambox":{
       "freq":"144.0",
       "mode":"SSTV",
-      "status":"TX"
+      "status":"TX",
+      "callsign": "EB2ELU"
    },
    "audioconf":{
-      "rf_in":"audio_a",
-      "rf_out":"audio_a",
-      "mic":"audio_b",
-      "spk":"audio_b"
+      "rf_in":"alsa_output.MyCard2.analog-stereo",
+      "rf_out":"alsa_input.MyCard2.analog-mono",
+      "mic":"alsa_input.MyCard1.analog-mono",
+      "spk":"alsa_output.MyCard1.analog-stereo"
    }
 }
