@@ -1,5 +1,5 @@
 #!flask/bin/python
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, render_template, send_from_directory, redirect
 from flask import request
 import json
 from src.common.logger import Logger
@@ -119,6 +119,26 @@ def stop_rec():
 def set_rx():
     engine.rx()
     return jsonify({'RX': 'OK'})
+
+
+@app.route('/hambox/css/<path:path>')
+def send_css(path):
+    return send_from_directory('templates/css', path)
+
+
+@app.route('/hambox/js/<path:path>')
+def send_js(path):
+    return send_from_directory('templates/js', path)
+
+
+@app.route('/', methods=['GET'])
+def rehome():
+    return redirect("hambox", code=302)
+
+
+@app.route('/hambox/', methods=['GET'])
+def home():
+    return render_template("hambox.html")
 
 
 if __name__ == '__main__':
