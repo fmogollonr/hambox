@@ -44,7 +44,25 @@
         );
     }
 
+    function set_freq() {
+        console.log("Set " + JSON.stringify({'freq': $("#freq").val()}));
+        $.ajax({
+                url: "/hambox/freq",
+                type: 'POST',
+                data: JSON.stringify({'freq': $("#freq").val()}),
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data, status) {
+                    console.log("set REC Data received: " + JSON.stringify(data) + "\nStatus: " + status);
+                }
+            }
+        );
+    }
+
     function loadSettings() {
+        /*$(document).on('input', '#freq', function () {
+            console.log("val "+ $("#freq").val());
+        })*/
         console.log("load everything");
         $.get("/hambox/config", function (data, status) {
             $("#freq").attr("value", data.hambox.freq);
@@ -64,6 +82,9 @@
         $("#stop_rec_button").click(function () {
             stop_record();
         });
+        $("#set_freq_button").click(function () {
+            set_freq();
+        });
         return;   // The function returns the product of p1 and p2
     }
 
@@ -81,7 +102,7 @@
             <p id="mode">SSTV</p>
             <p id="status">TX</p>
             <div>
-                <input type="number" id="freq" required name="price" min="0" value="144.000" step="0.001" min="144.000"
+                <input type="number" id="freq" required name="price" step="0.001" min="144.000"
                        max="146.000">
             </div>
         </div>
