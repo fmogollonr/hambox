@@ -12,3 +12,13 @@ set mode config
 curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/mode -d '{"mode":"SSTV"}'
 set status config
 curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/status -d '{"status":"RX"}'
+REC
+curl -XPOST http://localhost:5000/hambox/REC
+STOP RECORDING
+curl -XDELETE http://localhost:5000/hambox/REC
+TX
+curl -XPOST http://localhost:5000/hambox/TX
+RX
+curl -XPOST http://localhost:5000/hambox/RX
+
+
