@@ -47,6 +47,7 @@ def get_freq():
 
 @app.route('/hambox/freq', methods=['POST'])
 def set_freq():
+    print(request.json)
     try:
         request.json['freq']
         config = Config()
@@ -92,6 +93,13 @@ def set_mode():
 
 @app.route('/hambox/audioconfig', methods=['GET'])
 def get_audioconfig():
+    config = Config()
+    audioconfig = config.read_audio_config()
+    return jsonify({'audioconfig': audioconfig})
+
+
+@app.route('/hambox/audioconfig', methods=['GET'])
+def set_audioconfig():
     config = Config()
     audioconfig = config.read_audio_config()
     return jsonify({'audioconfig': audioconfig})
