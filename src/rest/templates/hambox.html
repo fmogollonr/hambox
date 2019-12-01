@@ -14,21 +14,21 @@
     function set_tx() {
         $.post("/hambox/TX",
             function (data, status) {
-                console.log("TX Data: " + data + "\nStatus: " + status);
+                console.log("TX Data: " + JSON.stringify(data) + "\nStatus: " + status);
             });
     }
 
     function set_rx() {
         $.post("/hambox/RX",
             function (data, status) {
-                console.log("RX Data: " + data + "\nStatus: " + status);
+                console.log("RX Data: " + JSON.stringify(data) + "\nStatus: " + status);
             });
     }
 
     function record() {
         $.post("/hambox/REC",
             function (data, status) {
-                console.log("REC Data: " + data + "\nStatus: " + status);
+                console.log("REC Data: " + JSON.stringify(data) + "\nStatus: " + status);
             });
     }
 
@@ -37,7 +37,7 @@
                 url: "/hambox/REC",
                 type: 'DELETE',
                 success: function (data, status) {
-                    console.log("Stop REC Data: " + data + "\nStatus: " + status);
+                    console.log("Stop REC Data: " + JSON.stringify(data) + "\nStatus: " + status);
                 }
 
             }
@@ -47,7 +47,7 @@
     function loadSettings() {
         console.log("load everything");
         $.get("/hambox/config", function (data, status) {
-            $("#freq").html(data.hambox.freq);
+            $("#freq").attr("value",data.hambox.freq);
             $("#callsign").html(data.hambox.callsign);
             $("#mode").html(data.hambox.mode);
             $("#status").html(data.hambox.status);
@@ -78,9 +78,11 @@
         <div class="col-sm-4">
             <h3>Status</h3>
             <p id="callsign">EB2ELU</p>
-            <p id="freq">144.500</p>
             <p id="mode">SSTV</p>
             <p id="status">TX</p>
+            <div>
+    <input type="number" id="freq" required name="price" min="0" value="144.000" step="0.001" min="144.000" max="146.000">
+</div>
         </div>
         <div class="col-sm-4">
             <h3>Actions</h3>
