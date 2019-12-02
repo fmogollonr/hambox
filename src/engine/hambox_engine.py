@@ -32,7 +32,7 @@ class HamboxEngine:
         ff = ffmpy.FFmpeg(
             inputs={
                 str(first_inputHw): ["-hide_banner", "-re", "-loglevel", "quiet", "-f", "s16le", "-ar", "44100", "-ac", "1", "-f", "pulse"],
-                str(second_inputHw): [ "-f", "s16le", "-ar", "44100", "-ac", "1", "-f", "pulse"]},
+                str(second_inputHw): ["-f", "s16le", "-ar", "44100", "-ac", "1", "-f", "pulse"]},
             outputs={str(fileOutput): ["-filter_complex", "[0:a][1:a]join=inputs=2:channel_layout=stereo[a]", "-map", "[a]"]}
         )
         process = Process(target=ff.run, args=())

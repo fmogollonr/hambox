@@ -47,7 +47,6 @@ def get_freq():
 
 @app.route('/hambox/freq', methods=['POST'])
 def set_freq():
-    print(request.json)
     try:
         request.json['freq']
         config = Config()

@@ -38,24 +38,18 @@ class Config:
         return
 
     def write_config(self, freq, mode, status):
-        print("write_config")
         hambox = {'hambox': {'freq': freq, 'mode': mode, 'status': status}}
         audioconfig = self.read_audio_config()
-        print("write_config1")
-
         self.write_full_config(hambox, audioconfig)
         return
 
     def write_audio_config(self, rf_in, rf_out, mic, spk):
         audioconfig = {'audioconf': {'rf_in': rf_in, 'rf_out': rf_out, 'mic': mic, 'spk': spk}}
         hambox = self.read_hambox_config()
-        self.write_full_config(hambox,audioconfig)
+        self.write_full_config(hambox, audioconfig)
         return
 
     def write_full_config(self, hambox_config, audio_config):
-        print("write_full_config")
-        print(hambox_config)
-        print(audio_config)
         hambox_full = {
             'hambox': {'freq': hambox_config['hambox']['freq'], 'mode': hambox_config['hambox']['mode'], 'status': hambox_config['hambox']['status']},
             'audioconf': {'rf_in': audio_config['rf_in'], 'rf_out': audio_config['rf_out'], 'mic': audio_config['mic'],
