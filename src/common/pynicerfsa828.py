@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-# import pyserial
-from fakeserial import Serial
+import serial
 
 
 class Sa828:
@@ -18,52 +17,39 @@ class Sa828:
           Serial options:
             * baud - Baud rate string        | Default: "9600"
             * device - a device string       | Default: "/dev/ttyS0"
-
-          Frequency options:
-            * tx - transmit frequency string | Default: "134.0000"
-            * rx - receive frequency string  | Default: "134.0000"
-            * sq - squelch integer 1-8       | Default: 1
-            * vol - volume integer 1-8       | Default: 1
-            * gwb - Channel Space 1-25000    | Default: 0
-
-          Filter options:
-           * pre_de_emph -  ??               | Default: 1
-           * highpass - highpass filter      | Default: 1
-           * lowpass - lowpass filter        | Default: 1
-
-          Continuous Tone-Coded Squelch System
-            * tx_ctcss - transmit - string   | Default: "0000"
-            * rx_ctcss - receive - string    | Default"0000"
-
-        Also runs a handshake validation that the Dorji module is working.
-        '''
+       '''
 
         self.settings = {
-            'tx': "134.0000",
-            'rx': "134.0000",
+            'tx': "144.0000",
+            'rx': "144.0000",
             'tx_ctcss': "0000",
             'rx_ctcss': "0000",
-            'gwb': "0",
             'sq': "1",
             'device': "/dev/ttyS0",
             'baud': "9600",
-            'vol': "1",
-            'pre_de_emph': "1",
-            'highpass': "1",
-            'lowpass': "1",
         }
 
         self.settings.update(kwargs)
 
-        self.ser = Serial(self.settings['device'],
+        self.ser = serial.Serial(self.settings['device'],
                           self.settings['baud'], timeout=2)
 
         if not self.ser.isOpen():
             exit("error")
 
-        if not self.send_atcommand('AT+DMOCONNECT\r\n'): exit("Handshake Error.")
-        if not self.set_dmosetgroup(): print("DMO Settings Error")
-        if not self.set_filter(): print("Filter Settings Error")
+    def read_line(self):
+        rv = ""
+        while True:
+            ch = self.ser.read()
+            rv += ch.decode()
+            if ch.decode() == '\r' or ch == '':
+                return rv
+
+    def get_info(self):
+        self.send_atcommand("AAFAA")
+        rcv = self.read_line()
+        print("received settings: ")
+        print(rcv)
 
     def __getitem__(self, key):
         if key not in self.settings.keys():
@@ -77,22 +63,6 @@ class Sa828:
         self.settings[key] = value
         self.set_dmosetgroup()
 
-    def scan_freq(self, freq):
-        '''
-        Scans wanted frequency for signal
-        Expects: Frequency (xxx.yyyy)
-        Returns: boolean
-        '''
-        if self.ser and freq:
-            cmd = "S+%s" % (freq)
-            self.ser.write(cmd)
-            r = self.ser.readline().split("=")[1].rstrip('\r\n')
-            if r == "1":
-                return False
-            elif r == "0":
-                return True
-            else:
-                return False
 
     def send_atcommand(self, cmd):
         '''
@@ -102,15 +72,7 @@ class Sa828:
         Returns boolean
         '''
         if self.ser and cmd:
-            self.ser.write(cmd)
-            r = self.ser.readline().split(":")[1].rstrip('\r\n')
-
-            if r == "1":
-                return False
-            elif r == "0":
-                return True
-            else:
-                return False
+            self.ser.write(cmd.encode())
 
     def set_volume(self, vol):
         '''

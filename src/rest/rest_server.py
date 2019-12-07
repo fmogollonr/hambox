@@ -5,10 +5,17 @@ import json
 from src.common.logger import Logger
 from src.common.config import Config
 from src.engine.hambox_engine import HamboxEngine
+from src.common.pynicerfsa828 import Sa828
 
 app = Flask(__name__)
 
 engine = HamboxEngine()
+
+
+def get_config_sa828():
+    radio_engine = Sa828()
+    radio_engine.get_info()
+    return
 
 
 def get_config():
@@ -21,6 +28,12 @@ def set_config(freq, mode, status):
     config = Config()
     hambox_json = config.write_config(freq, mode, status)
     return hambox_json
+
+
+@app.route('/hambox/radio', methods=['GET'])
+def get_radio_config():
+    get_config_sa828()
+    return jsonify({'radio_config': "OK"})
 
 
 @app.route('/hambox/config', methods=['GET'])
