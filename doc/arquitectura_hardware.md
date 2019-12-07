@@ -24,4 +24,4 @@ graph LR;
     SPEAKER((SPEAKER))
 ```
 
-![arquitectura.png](arquitectura.png)
+![arquitectura.png](arquitectura_hardware.png)
