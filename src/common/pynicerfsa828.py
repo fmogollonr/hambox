@@ -50,6 +50,14 @@ class Sa828:
         rcv = self.read_line()
         print("received settings: ")
         print(rcv)
+        return rcv
+
+    def read_memory_configuration(self):
+        self.send_atcommand("AAFA1")
+        rcv = self.read_line()
+        print("memory configuration: ")
+        print(rcv)
+        return rcv
 
     def __getitem__(self, key):
         if key not in self.settings.keys():

@@ -12,10 +12,16 @@ app = Flask(__name__)
 engine = HamboxEngine()
 
 
-def get_config_sa828():
+def get_info_sa828():
     radio_engine = Sa828()
-    radio_engine.get_info()
-    return
+    info = radio_engine.get_info()
+    return info
+
+
+def get_memory_sa828():
+    radio_engine = Sa828()
+    memory = radio_engine.read_memory_configuration()
+    return memory
 
 
 def get_config():
@@ -30,10 +36,16 @@ def set_config(freq, mode, status):
     return hambox_json
 
 
-@app.route('/hambox/radio', methods=['GET'])
-def get_radio_config():
-    get_config_sa828()
-    return jsonify({'radio_config': "OK"})
+@app.route('/hambox/radio/memory', methods=['GET'])
+def get_radio_memory():
+    memory = get_memory_sa828()
+    return jsonify({'radio_memory': memory})
+
+
+@app.route('/hambox/radio/info', methods=['GET'])
+def get_radio_info():
+    info = get_info_sa828()
+    return jsonify({'radio_info': info})
 
 
 @app.route('/hambox/config', methods=['GET'])
