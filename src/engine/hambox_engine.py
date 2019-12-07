@@ -15,7 +15,7 @@ class HamboxEngine:
         self.record_pid = 0
 
     @staticmethod
-    def alsa_inout(inputHw, outputHw):
+    def pulseaudio_inout(inputHw, outputHw):
         ff = ffmpy.FFmpeg(
             inputs={
                 str(inputHw): ["-hide_banner", "-re", "-loglevel", "quiet", "-f", "s16le", "-ar", "44100", "-ac", "1", "-f", "pulse"]},
@@ -44,14 +44,14 @@ class HamboxEngine:
         config = Config()
         audioconfig = config.read_audio_config()
         self.kill_process(self.process_pid)
-        self.process_pid = self.alsa_inout(audioconfig['mic'], audioconfig['rf_in'])
+        self.process_pid = self.pulseaudio_inout(audioconfig['mic'], audioconfig['rf_in'])
         return
 
     def rx(self):
         config = Config()
         audioconfig = config.read_audio_config()
         self.kill_process(self.process_pid)
-        self.process_pid = self.alsa_inout(audioconfig['rf_out'], audioconfig['spk'])
+        self.process_pid = self.pulseaudio_inout(audioconfig['rf_out'], audioconfig['spk'])
         return
 
     def rec(self):
