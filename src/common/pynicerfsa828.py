@@ -71,6 +71,8 @@ class Sa828:
         self.settings[key] = value
         self.set_dmosetgroup()
 
+    def set_rx(self):
+        return
 
     def send_atcommand(self, cmd):
         '''
@@ -82,48 +84,3 @@ class Sa828:
         if self.ser and cmd:
             self.ser.write(cmd.encode())
 
-    def set_volume(self, vol):
-        '''
-        Sets the volume on the dorji chip,
-
-        Expects: serial device, and volume int (1-8)
-
-        Returns boolean
-        '''
-        if vol:
-            if self.send_atcommand(self.ser, 'AT+DMOSETVOLUME=%s\r\n' % (volume)):
-                return True
-            else:
-                return False
-
-    def set_filter(self):
-        '''
-        Used to turn on/off Pre/de-emphasis, lowpass, and highpass filters
-
-        Expects a serial device and dict with:
-        {pre_de_emph},{highpass},{lowpass}
-
-        Returns boolean
-        '''
-        if filter:
-            cmd = 'AT+SETFILTER={pre_de_emph},{highpass},{lowpass}\r\n'.format(**self.settings)
-
-            if self.send_atcommand(cmd):
-                return True
-            else:
-                return False
-
-    def set_dmosetgroup(self):
-        '''
-        Configure a group of Dorji module options.
-
-        Expects a serial device and a dict with:
-        {channel_space},{tx_freq},{rx_freq},{tx_ctcss},{sq},{rx_ctcss}
-
-        Returns a array with [0] - Status, [1] - Message
-        '''
-        cmd = 'AT+DMOSETGROUP={gwb},{tx},{rx},{tx_ctcss},{sq},{rx_ctcss}\r\n'.format(**self.settings)
-        if self.send_atcommand(cmd):
-            return True
-        else:
-            return False
