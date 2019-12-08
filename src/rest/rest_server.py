@@ -6,22 +6,11 @@ from src.common.logger import Logger
 from src.common.config import Config
 from src.engine.hambox_engine import HamboxEngine
 from src.common.pynicerfsa828 import Sa828
+from src.common.radio import Radio
 
 app = Flask(__name__)
 
 engine = HamboxEngine()
-
-
-def get_info_sa828():
-    radio_engine = Sa828()
-    info = radio_engine.get_info()
-    return info
-
-
-def get_memory_sa828():
-    radio_engine = Sa828()
-    memory = radio_engine.read_memory_configuration()
-    return memory
 
 
 def get_config():
@@ -38,13 +27,15 @@ def set_config(freq, mode, status):
 
 @app.route('/hambox/radio/memory', methods=['GET'])
 def get_radio_memory():
-    memory = get_memory_sa828()
+    radio_engine = Radio()
+    memory = radio_engine.get_radio_memory()
     return jsonify({'radio_memory': memory})
 
 
 @app.route('/hambox/radio/info', methods=['GET'])
 def get_radio_info():
-    info = get_info_sa828()
+    radio_engine = Radio()
+    info = radio_engine.get_info()
     return jsonify({'radio_info': info})
 
 

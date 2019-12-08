@@ -59,6 +59,38 @@ class Sa828:
         print(rcv)
         return rcv
 
+    def set_full_configuration(self, freq, txcts, rxctcs, squelch):
+        configuration = []
+        for pos in range(0, 15):
+            self.set_mem_position(freq, 0, pos, configuration)
+            self.set_mem_position(freq, 1, pos, configuration)
+        self.set_mem_position(txcts, 2, 32, configuration)
+        self.set_mem_position(rxctcs, 2, 33, configuration)
+        self.set_mem_position(squelch, 2, 34, configuration)
+
+        return
+
+
+    # type 0 TX
+    # type 1 RX
+    # type 2 special txcts, rxcts, squelch
+    def set_mem_position(self, freq, type, position, configuration):
+        offset = 0
+        if type is 1:
+            offset = 16
+
+        configuration[position+offset] = freq
+
+        return configuration
+
+    def set_memory_configuration(self,memory):
+        config = str(memory).strip('[]')
+        self.send_atcommand("AAFA3 "+config)
+        rcv = self.read_line()
+        print("memory configuration: ")
+        print(rcv)
+        return rcv
+
     def __getitem__(self, key):
         if key not in self.settings.keys():
             raise KeyError
