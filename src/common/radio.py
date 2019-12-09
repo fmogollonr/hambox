@@ -28,7 +28,10 @@ class Radio:
     def get_freq(self):
         return
 
-    def set_freq(self):
+    def set_freq(self, freq):
+        if 'nicerf' in self.radio_device:
+            radio_engine = Sa828()
+            radio_engine.set_full_configuration(freq)
         return
 
     def set_tx(self):

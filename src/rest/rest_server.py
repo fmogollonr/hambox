@@ -67,6 +67,8 @@ def set_freq():
         request.json['freq']
         config = Config()
         config.set_freq(request.json['freq'])
+        radio_engine = Radio()
+        radio_engine.set_freq(request.json['freq'])
         return get_hambox()
     except:
         return jsonify({'hambox': 'no_freq_sent'})

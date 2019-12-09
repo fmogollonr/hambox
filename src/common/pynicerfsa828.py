@@ -59,15 +59,23 @@ class Sa828:
         print(rcv)
         return rcv
 
-    def set_full_configuration(self, freq, txcts, rxctcs, squelch):
-        configuration = []
+    def set_full_configuration(self, freq, txcts=None, rxctcs=None, squelch=None):
+        configuration = [None] *35
+        if txcts is None:
+            txcts = self.settings['tx_ctcss']
+        if rxctcs is None:
+            rxctcs = self.settings['rx_ctcss']
+        if squelch is None:
+            squelch = self.settings['sq']
         for pos in range(0, 15):
             self.set_mem_position(freq, 0, pos, configuration)
             self.set_mem_position(freq, 1, pos, configuration)
+
         self.set_mem_position(txcts, 2, 32, configuration)
         self.set_mem_position(rxctcs, 2, 33, configuration)
         self.set_mem_position(squelch, 2, 34, configuration)
 
+        print(configuration)
         return
 
 
@@ -78,16 +86,17 @@ class Sa828:
         offset = 0
         if type is 1:
             offset = 16
-
+        print(configuration)
+        print("position")
         configuration[position+offset] = freq
 
         return configuration
 
-    def set_memory_configuration(self,memory):
+    def set_memory_configuration(self, memory):
         config = str(memory).strip('[]')
         self.send_atcommand("AAFA3 "+config)
         rcv = self.read_line()
-        print("memory configuration: ")
+        print("set memory configuration: ")
         print(rcv)
         return rcv
 
