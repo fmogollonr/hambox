@@ -28,7 +28,7 @@ class HamboxEngine:
 
 # ffmpeg -f s16le -ar 44100 -ac 1 -f alsa -i hw:audio_b -f s16le -ar 44100 -ac 1 -f alsa -i hw:audio_a -filter_complex [0:a][1:a]join=inputs=2:channel_layout=stereo[a] -map [a] output.wav
     @staticmethod
-    def alsa_record(first_inputHw, second_inputHw, fileOutput):
+    def pulseaudio_record(first_inputHw, second_inputHw, fileOutput):
         ff = ffmpy.FFmpeg(
             inputs={
                 str(first_inputHw): ["-hide_banner", "-re", "-loglevel", "quiet", "-f", "s16le", "-ar", "44100", "-ac", "1", "-f", "pulse"],
@@ -61,7 +61,7 @@ class HamboxEngine:
         file_name = hamboxconfig['callsign']
         date = datetime.datetime.now()
         print("Date is "+str(date.strftime("%Y%m%d_%H%M%S")))
-        self.record_pid = self.alsa_record(audioconfig['rf_out'], audioconfig['mic'], file_name+date.strftime("%Y%m%d_%H%M%S")+".wav")
+        self.record_pid = self.pulseaudio_record(audioconfig['rf_out'], audioconfig['mic'], file_name + date.strftime("%Y%m%d_%H%M%S") + ".wav")
         return file_name
 
     def stop_rec(self):
