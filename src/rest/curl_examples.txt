@@ -7,7 +7,8 @@ curl -i http://localhost:5000/hambox/config
 set hambox config
 curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/config -d '{"freq":"142.500","mode":"FM","status":"TX"}'
 set freq config
-curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/freq -d '{"freq":"144.100"}'
+# 4 decimales, si no, da error
+curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/freq -d '{"freq":"144.1000"}'
 set mode config
 curl -H "Content-Type: application/json" -XPOST http://localhost:5000/hambox/mode -d '{"mode":"SSTV"}'
 set status config
@@ -24,6 +25,8 @@ GET radio info
 curl -i http://192.168.1.50:5000/hambox/radio/info
 GET radio memory
 curl -i http://192.168.1.50:5000/hambox/radio/memory
+# RX test (pitido)
+curl -H "Content-Type: application/json" -XPOST http://192.168.1.50:5000/hambox/RX -d '{"test":true}'
 
 
 

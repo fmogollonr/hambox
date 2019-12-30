@@ -5,7 +5,6 @@ import json
 from src.common.logger import Logger
 from src.common.config import Config
 from src.engine.hambox_engine import HamboxEngine
-from src.common.pynicerfsa828 import Sa828
 from src.common.radio import Radio
 
 app = Flask(__name__)
@@ -142,8 +141,13 @@ def stop_rec():
 
 @app.route('/hambox/RX', methods=['POST'])
 def set_rx():
-    engine.rx()
-    return jsonify({'RX': 'OK'})
+    try:
+        request.json['test']
+        engine.rx_test()
+        return jsonify({'RXTEST': 'OK'})
+    except:
+        engine.rx()
+        return jsonify({'RX': 'OK'})
 
 
 @app.route('/hambox/css/<path:path>')
