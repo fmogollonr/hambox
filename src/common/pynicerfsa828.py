@@ -2,7 +2,7 @@
 
 import serial
 from .logger import Logger
-
+import RPi.GPIO as GPIO
 
 class Sa828:
     '''
@@ -12,6 +12,9 @@ class Sa828:
     def __init__(self, **kwargs):
         self.log = Logger("nicerf")
         self.log.send_log("debug", "__init__")
+        self.gpio_ptt = 7
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.gpio_ptt, GPIO.OUT)
         '''
         Set defaults
 
@@ -122,6 +125,7 @@ class Sa828:
         self.set_dmosetgroup()
 
     def set_rx(self):
+        GPIO.output(self.gpio_ptt, 1)
         return
 
     def send_atcommand(self, cmd):
