@@ -1,7 +1,7 @@
 import json
-from src.common.pynicerfsa828 import Sa828
+from common.pynicerfsa828 import Sa828
 #from src.common.pydorji import Dorji
-from src.common.config import Config
+from common.config import Config
 from .logger import Logger
 
 

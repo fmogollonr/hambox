@@ -2,10 +2,27 @@
 from flask import Flask, jsonify, abort, render_template, send_from_directory, redirect
 from flask import request
 import json
-from src.common.logger import Logger
-from src.common.config import Config
-from src.engine.hambox_engine import HamboxEngine
-from src.common.radio import Radio
+from importlib.machinery import SourceFileLoader
+import sys
+import os
+#sys.path.append(os.path.join(os.path.dirname(
+#    os.path.abspath(__file__)), 'common/logger'))
+#sys.path.append(os.path.join(os.path.dirname(
+#    os.path.abspath(__file__)), 'common/config'))
+#sys.path.append(os.path.join(os.path.dirname(
+#    os.path.abspath(__file__)), 'engine/hambox_engine'))
+#sys.path.append(os.path.join(os.path.dirname(
+#    os.path.abspath(__file__)), 'common/radio'))
+
+from engine.hambox_engine import HamboxEngine
+from common.logger import Logger
+from common.config import Config
+from common.radio import Radio
+
+#from src.common.logger import Logger
+#from src.common.config import Config
+#from src.engine.hambox_engine import HamboxEngine
+#from src.common.radio import Radio
 
 app = Flask(__name__)
 
@@ -26,7 +43,7 @@ def set_config(freq, mode, status):
 
 @app.route('/hambox/radio/memory', methods=['GET'])
 def get_radio_memory():
-    radio_engine = Radio()
+    radio_engine = radio.Radio()
     memory = radio_engine.get_radio_memory()
     return jsonify({'radio_memory': memory})
 
@@ -152,12 +169,12 @@ def set_rx():
 
 @app.route('/hambox/css/<path:path>')
 def send_css(path):
-    return send_from_directory('templates/css', path)
+    return send_from_directory('rest/templates/css', path)
 
 
 @app.route('/hambox/js/<path:path>')
 def send_js(path):
-    return send_from_directory('templates/js', path)
+    return send_from_directory('rest/templates/js', path)
 
 
 @app.route('/', methods=['GET'])

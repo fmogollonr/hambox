@@ -6,7 +6,7 @@ class Config:
     def __init__(self):
         self.log = {}
         self.log = Logger("HamboxConfig")
-        self.config_path = "../common/config.json"
+        self.config_path = "common/config.json"
 
     def get_full_conf(self):
         with open(self.config_path) as json_file:

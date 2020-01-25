@@ -1,6 +1,10 @@
 import ffmpy
-from src.common.logger import Logger
-from src.common.config import Config
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), 'common/logger'))
+from common.logger import Logger
+from common.config import Config
 from multiprocessing import Process
 import psutil
 import datetime
