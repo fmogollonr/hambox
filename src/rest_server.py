@@ -5,24 +5,11 @@ import json
 from importlib.machinery import SourceFileLoader
 import sys
 import os
-#sys.path.append(os.path.join(os.path.dirname(
-#    os.path.abspath(__file__)), 'common/logger'))
-#sys.path.append(os.path.join(os.path.dirname(
-#    os.path.abspath(__file__)), 'common/config'))
-#sys.path.append(os.path.join(os.path.dirname(
-#    os.path.abspath(__file__)), 'engine/hambox_engine'))
-#sys.path.append(os.path.join(os.path.dirname(
-#    os.path.abspath(__file__)), 'common/radio'))
 
 from engine.hambox_engine import HamboxEngine
 from common.logger import Logger
 from common.config import Config
 from common.radio import Radio
-
-#from src.common.logger import Logger
-#from src.common.config import Config
-#from src.engine.hambox_engine import HamboxEngine
-#from src.common.radio import Radio
 
 app = Flask(__name__)
 
