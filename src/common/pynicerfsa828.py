@@ -38,7 +38,7 @@ class Sa828:
             'rx': "144.0000",
             'tx_ctcss': "000",
             'rx_ctcss': "000",
-            'sq': "0",
+            'sq': "1",
             'device': "/dev/ttyS0",
             'baud': "9600",
         }
@@ -178,8 +178,14 @@ class Sa828:
     def set_rx(self):
         GPIO.output(self.gpio_ptt, 1)
         self.set_channel(2)
-        print("channel")
+        print("channelRX")
         return
+
+    def set_tx(self):
+        GPIO.output(self.gpio_ptt, 0)
+        self.set_channel(3)
+        print("channelTX")
+        return        
 
     def send_atcommand(self, cmd):
         self.log.send_log("debug", "send_atcommand")

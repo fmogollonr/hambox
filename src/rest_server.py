@@ -127,8 +127,17 @@ def set_audioconfig():
 
 @app.route('/hambox/TX', methods=['POST'])
 def set_tx():
-    engine.tx()
-    return jsonify({'TX': 'OK'})
+    try:
+        request.json['test']
+        #engine.tx_test()
+        radio_engine = Radio()
+        radio_engine.set_tx()
+        return jsonify({'TXTEST': 'OK'})
+    except:
+        engine.tx()
+        radio_engine = Radio()
+        radio_engine.set_tx()
+        return jsonify({'TX': 'OK'})
 
 
 @app.route('/hambox/REC', methods=['POST'])

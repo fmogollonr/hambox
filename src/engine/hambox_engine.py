@@ -73,6 +73,12 @@ class HamboxEngine:
         self.kill_process(self.process_pid)
         self.process_pid = self.gen_tone(1000, audioconfig['spk'])
 
+    def tx_test(self):
+        config = Config()
+        audioconfig = config.read_audio_config()
+        self.kill_process(self.process_pid)
+        self.process_pid = self.gen_tone(1000, audioconfig['rf_in'])
+
     def rx(self):
         config = Config()
         audioconfig = config.read_audio_config()

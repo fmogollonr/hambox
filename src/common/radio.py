@@ -40,6 +40,10 @@ class Radio:
         return
 
     def set_tx(self):
+        if 'nicerf' in self.radio_device:
+            radio_engine = Sa828()
+            print("TXTXTXTX")
+            radio_engine.set_tx()
         return
 
     def set_rx(self):
