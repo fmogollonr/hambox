@@ -12,9 +12,17 @@ class Sa828:
     def __init__(self, **kwargs):
         self.log = Logger("nicerf")
         self.log.send_log("debug", "__init__")
-        self.gpio_ptt = 7
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BCM) # GPIO numbering set to logic mode
+        self.gpio_ptt = 4
+        self.gpio_pin8 = 19
+        self.gpio_pin4 = 26
+        self.gpio_pin2 = 13
+        self.gpio_pin1 = 6
         GPIO.setup(self.gpio_ptt, GPIO.OUT)
+        GPIO.setup(self.gpio_pin1, GPIO.OUT)
+        GPIO.setup(self.gpio_pin2, GPIO.OUT)
+        GPIO.setup(self.gpio_pin4, GPIO.OUT)
+        GPIO.setup(self.gpio_pin8, GPIO.OUT)
         '''
         Set defaults
 
@@ -88,6 +96,49 @@ class Sa828:
         self.log.send_log("debug", configuration)
         self.set_memory_configuration(configuration)
         return
+    
+    def set_binary_channel(self,pin8, pin4, pin2, pin1):
+        GPIO.output(self.gpio_pin1, pin1)
+        GPIO.output(self.gpio_pin2, pin2)
+        GPIO.output(self.gpio_pin4, pin4)
+        GPIO.output(self.gpio_pin8, pin8)
+        return
+
+    def set_channel(self,channel):
+        if channel is 1:
+            self.set_binary_channel(0,0,0,0)
+        elif channel is 2:
+            self.set_binary_channel(0,0,0,1)
+        elif channel is 3:
+            self.set_binary_channel(0,0,1,0)
+        elif channel is 4:
+            self.set_binary_channel(0,0,1,1)
+        elif channel is 5:
+            self.set_binary_channel(0,1,0,0)
+        elif channel is 6:
+            self.set_binary_channel(0,1,0,1)
+        elif channel is 7:
+            self.set_binary_channel(0,1,1,0)
+        elif channel is 8:
+            self.set_binary_channel(0,1,1,1)
+        elif channel is 9:
+            self.set_binary_channel(1,0,0,0)
+        elif channel is 10:
+            self.set_binary_channel(1,0,0,1)
+        elif channel is 11:
+            self.set_binary_channel(1,0,1,0)
+        elif channel is 12:
+            self.set_binary_channel(1,0,1,1)
+        elif channel is 13:
+            self.set_binary_channel(1,1,0,0)
+        elif channel is 14:
+            self.set_binary_channel(1,1,0,1)
+        elif channel is 15:
+            self.set_binary_channel(1,1,1,0)
+        elif channel is 16:
+            self.set_binary_channel(1,1,1,1)                        
+                                                
+
 
     # type 0 TX
     # type 1 RX
@@ -112,7 +163,7 @@ class Sa828:
         self.log.send_log("debug", "set memory configuration: "+str(rcv))
         return rcv
 
-    def __getitem__(self, key):
+    """ def __getitem__(self, key):
         if key not in self.settings.keys():
             raise KeyError
         return self.settings[key]
@@ -122,10 +173,12 @@ class Sa828:
             raise KeyError
 
         self.settings[key] = value
-        self.set_dmosetgroup()
+        self.set_dmosetgroup() """
 
     def set_rx(self):
         GPIO.output(self.gpio_ptt, 1)
+        self.set_channel(2)
+        print("channel")
         return
 
     def send_atcommand(self, cmd):

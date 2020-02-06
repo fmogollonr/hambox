@@ -43,6 +43,10 @@ class Radio:
         return
 
     def set_rx(self):
+        if 'nicerf' in self.radio_device:
+            radio_engine = Sa828()
+            print("RXRXRXRXRX")
+            radio_engine.set_rx()
         return
 
     def set_squelch(self):

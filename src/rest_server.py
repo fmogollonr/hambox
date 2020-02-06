@@ -30,7 +30,7 @@ def set_config(freq, mode, status):
 
 @app.route('/hambox/radio/memory', methods=['GET'])
 def get_radio_memory():
-    radio_engine = radio.Radio()
+    radio_engine = Radio()
     memory = radio_engine.get_radio_memory()
     return jsonify({'radio_memory': memory})
 
@@ -151,6 +151,8 @@ def set_rx():
         return jsonify({'RXTEST': 'OK'})
     except:
         engine.rx()
+        radio_engine = Radio()
+        radio_engine.set_rx()
         return jsonify({'RX': 'OK'})
 
 
