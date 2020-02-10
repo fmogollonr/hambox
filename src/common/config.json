@@ -1,1 +1,15 @@
-{"hambox": {"freq": "144.500", "mode": "SSTV", "status": "TX"}, "audioconf": {"rf_in": "hw:audio_b", "rf_out": "alsa_input.MyCard2.analog-mono", "mic": "alsa_input.MyCard1.analog-mono", "spk": "hw:audio_a"}, "radio": "nicerf"}
+{
+    "hambox": {
+        "freq": "145.5000",
+        "mode": "SSTV",
+        "status": "TX",
+        "callsign": "EB2ELU"
+    },
+    "audioconf": {
+        "rf_in": "hw:audio_b",
+        "rf_out": "alsa_input.MyCard2.analog-mono",
+        "mic": "alsa_input.MyCard1.analog-mono",
+        "spk": "hw:audio_a"
+    },
+    "radio": "nicerf"
+}

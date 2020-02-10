@@ -94,6 +94,23 @@ def set_status():
         return jsonify({'hambox': 'no_status_sent'})
 
 
+@app.route('/hambox/callsign', methods=['GET'])
+def get_mode():
+    hambox_json = get_config()
+    return jsonify({'callsign': hambox_json['callsign']})
+
+
+@app.route('/hambox/callsign', methods=['POST'])
+def set_mode():
+    try:
+        request.json['callsign']
+        config = Config()
+        config.set_callsign(request.json['callsign'])
+        return get_hambox()
+    except:
+        return jsonify({'hambox': 'no_mode_sent'})
+
+
 @app.route('/hambox/mode', methods=['GET'])
 def get_mode():
     hambox_json = get_config()

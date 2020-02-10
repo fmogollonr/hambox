@@ -30,21 +30,26 @@ class Config:
 
     def set_freq(self, freq):
         hambox = self.read_hambox_config()
-        self.write_config(freq, hambox['mode'], hambox['status'])
+        self.write_config(freq, hambox['mode'], hambox['status'],hambox['callsign'])
         return
 
     def set_mode(self, mode):
         hambox = self.read_hambox_config()
-        self.write_config(hambox['freq'], mode, hambox['status'])
+        self.write_config(hambox['freq'], mode, hambox['status'], hambox['callsign'])
         return
 
     def set_status(self, status):
         hambox = self.read_hambox_config()
-        self.write_config(hambox['freq'], hambox['mode'], status)
+        self.write_config(hambox['freq'], hambox['mode'], status, hambox['callsign'])
         return
 
-    def write_config(self, freq, mode, status):
-        hambox = {'hambox': {'freq': freq, 'mode': mode, 'status': status}}
+    def set_callsign(self, callsign):
+        hambox = self.read_hambox_config()
+        self.write_config(hambox['freq'], hambox['mode'], hambox['status'], callsign)
+        return        
+
+    def write_config(self, freq, mode, status,callsign):
+        hambox = {'hambox': {'freq': freq, 'mode': mode, 'status': status, 'callsign': callsign}}
         audioconfig = self.read_audio_config()
         radio = self.read_radio_config()
         self.write_full_config(hambox, audioconfig, radio)
