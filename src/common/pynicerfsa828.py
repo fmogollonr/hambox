@@ -183,7 +183,7 @@ class Sa828:
 
     def set_tx(self):
         GPIO.output(self.gpio_ptt, 0)
-        self.set_channel(3)
+        #self.set_channel(1)
         print("channelTX")
         return        
 
