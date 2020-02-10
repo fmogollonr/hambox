@@ -20,3 +20,7 @@ This project will implement several advanced radio-ham utilities that are not ea
 
 All project will be based on open source, so anyone could implement new functionalities using current hardware.
 
+# Tareas restantes
+
+[Taks](doc/tasks.md)
+
