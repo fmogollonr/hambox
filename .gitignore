@@ -1,2 +1,10 @@
 felipe.xml
 .idea/dictionaries/felipe.xml
+src/common/__pycache__/config.cpython-37.pyc
+src/common/__pycache__/logger.cpython-37.pyc
+src/common/__pycache__/pynicerfsa828.cpython-37.pyc
+src/common/__pycache__/radio.cpython-37.pyc
+src/engine/__pycache__/hambox_engine.cpython-37.pyc
+tmp/*
+.vscode/*
+.idea/*
