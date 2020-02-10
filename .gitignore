@@ -8,3 +8,9 @@ src/engine/__pycache__/hambox_engine.cpython-37.pyc
 tmp/*
 .vscode/*
 .idea/*
+.idea/hambox.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/dictionaries/felipe.xml
+.idea/inspectionProfiles/profiles_settings.xml
