@@ -6,3 +6,4 @@
 - [ ] Decodificar APRS / Decoder APRS
 - [ ] Codificar APRS / Encode APRS
 - [ ] Leer GPS / Read APRS position
+- [ ] Tests (Lo que nunca termina)

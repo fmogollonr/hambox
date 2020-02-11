@@ -8,9 +8,17 @@ class Config:
         self.log = Logger("HamboxConfig")
         self.config_path = "common/config.json"
 
+    def set_path(self, path):
+        self.config_path=path
+        return
+
+    def get_path(self):
+        return self.config_path
+
     def get_full_conf(self):
         with open(self.config_path) as json_file:
             data = json.load(json_file)
+            print(data)
             return data
 
     def read_hambox_config(self):
