@@ -73,7 +73,7 @@ class Dorji:
         rv = ""
         while True:
             ch = self.ser.read()
-            print(ch)
+            #print(ch)
             rv += ch.decode()
             if ch.decode() == '\r' or ch == '':
                 return rv
@@ -180,9 +180,13 @@ class Dorji:
         '''
         #cmd = 'AT+DMOSETGROUP={gwb},{tx},{rx},{tx_ctcss},{sq},{rx_ctcss}\r\n'.format(**self.settings)
         #cmd = 'AT+DMOSETGROUP={gwb},{tx},{rx},{tx_ctcss},{sq},{rx_ctcss}\r\n'
+        cmd1 = "AT+DMOSETGROUP="+self.settings['gwb']+","+self.settings['tx']+","+self.settings['rx']+","+self.settings['tx_ctcss']+","+self.settings['sq']+","+self.settings['rx_ctcss']+"\r\n"
         #cmd= 'AT+DMOSETGROUP=0,145.1250,145.1250,0012,4,0003\r\n'
         cmd ="AT+DMOSETGROUP=1,144.125,144.125,754N,4,445I\r\n"
         print(cmd)
+        print("settings")
+        print(self.settings['tx'])
+        print(cmd1)
         if self.send_atcommand(cmd):
             print("DMO OK")
             rcv = self.read_line()
