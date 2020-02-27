@@ -67,11 +67,13 @@ def get_freq():
 @app.route('/hambox/freq', methods=['POST'])
 def set_freq():
     try:
-        request.json['freq']
-        config = Config()
-        config.set_freq(request.json['freq'])
+        freq = request.json['freq']
+        #config = Config()
+        #config.set_freq(request.json['freq'])
+        print("freq to be set "+freq)
         radio_engine = Radio()
-        radio_engine.set_freq(request.json['freq'])
+        radio_engine.set_freq(freq)
+        print("freq setted")
         return get_hambox()
     except:
         return jsonify({'hambox': 'no_freq_sent'})
@@ -95,13 +97,13 @@ def set_status():
 
 
 @app.route('/hambox/callsign', methods=['GET'])
-def get_mode():
+def get_callsign():
     hambox_json = get_config()
     return jsonify({'callsign': hambox_json['callsign']})
 
 
 @app.route('/hambox/callsign', methods=['POST'])
-def set_mode():
+def set_callsign():
     try:
         request.json['callsign']
         config = Config()

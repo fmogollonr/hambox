@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 
-#import pyserial
-from fakeserial import Serial
+import serial
+import RPi.GPIO as GPIO
+
+#from fakeserial import Serial
 class Dorji:
     '''
     A class for managing the Dorji818 chip via serial
     '''
 
     def __init__( self, **kwargs ):
+        GPIO.setmode(GPIO.BCM) # GPIO numbering set to logic mode
+        self.gpio_ptt = 22
+        GPIO.setup(self.gpio_ptt, GPIO.OUT)
+
         '''
         Set defaults
 
@@ -37,8 +43,8 @@ class Dorji:
         '''
 
         self.settings = {
-            'tx' : "134.0000",
-            'rx' : "134.0000",
+            'tx' : "144.1500",
+            'rx' : "144.1500",
             'tx_ctcss' : "0000",
             'rx_ctcss' : "0000",
             'gwb' : "0",
@@ -53,7 +59,7 @@ class Dorji:
 
         self.settings.update(kwargs)
 
-        self.ser = Serial(self.settings['device'],
+        self.ser = serial.Serial(self.settings['device'],
                             self.settings['baud'], timeout=2)
 
         if not self.ser.isOpen():
@@ -63,6 +69,26 @@ class Dorji:
         if not self.set_dmosetgroup(): print("DMO Settings Error")
         if not self.set_filter(): print("Filter Settings Error")
 
+    def read_line(self):
+        rv = ""
+        while True:
+            ch = self.ser.read()
+            print(ch)
+            rv += ch.decode()
+            if ch.decode() == '\r' or ch == '':
+                return rv
+    def set_tx(self):
+        GPIO.output(self.gpio_ptt, 0)
+        print("TX dorji")
+        return
+
+    def say_hello(self):
+        response=self.send_atcommand('AT+DMOCONNECT\r\n')
+        print(response)
+        rcv = self.read_line()
+        print("hello response:")
+        print(rcv)
+        return rcv
 
     def __getitem__(self, key):
         if key not in self.settings.keys():
@@ -101,12 +127,13 @@ class Dorji:
         Returns boolean
         '''
         if self.ser and cmd:
-            self.ser.write(cmd)
-            r = self.ser.readline().split(":")[1].rstrip('\r\n')
+            self.ser.write(cmd.encode())
+            #r = self.ser.readline().split(":")[1].rstrip('\r\n')
 
-            if r == "1": return False
-            elif r == "0": return True
-            else: return False
+            #if r == "1": return False
+            #elif r == "0": return True
+            #else: return False
+            return True
 
 
     def set_volume(self,vol):
@@ -151,8 +178,17 @@ class Dorji:
 
         Returns a array with [0] - Status, [1] - Message
         '''
-        cmd = 'AT+DMOSETGROUP={gwb},{tx},{rx},{tx_ctcss},{sq},{rx_ctcss}\r\n'.format(**self.settings)
+        #cmd = 'AT+DMOSETGROUP={gwb},{tx},{rx},{tx_ctcss},{sq},{rx_ctcss}\r\n'.format(**self.settings)
+        #cmd = 'AT+DMOSETGROUP={gwb},{tx},{rx},{tx_ctcss},{sq},{rx_ctcss}\r\n'
+        #cmd= 'AT+DMOSETGROUP=0,145.1250,145.1250,0012,4,0003\r\n'
+        cmd ="AT+DMOSETGROUP=1,144.125,144.125,754N,4,445I\r\n"
+        print(cmd)
         if self.send_atcommand(cmd):
+            print("DMO OK")
+            rcv = self.read_line()
+            print("DMO OK")
+            print(rcv)
             return True
         else:
+            print("CRAP")
             return False

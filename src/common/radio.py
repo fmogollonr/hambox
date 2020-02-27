@@ -1,6 +1,6 @@
 import json
 from common.pynicerfsa828 import Sa828
-#from src.common.pydorji import Dorji
+from common.pydorji import Dorji
 from common.config import Config
 from .logger import Logger
 
@@ -28,6 +28,10 @@ class Radio:
         if 'nicerf' in self.radio_device:
             info = self.get_info_sa828()
             return info
+        if 'dorji' in self.radio_device:
+            radio_engine = Dorji()
+            info = radio_engine.say_hello()
+            return info            
 
     def get_freq(self):
         return
@@ -37,11 +41,21 @@ class Radio:
         if 'nicerf' in self.radio_device:
             radio_engine = Sa828()
             radio_engine.set_full_configuration(freq)
+        if 'dorji' in self.radio_device:
+            radio_engine = Dorji()
+            radio_engine['tx']=str(freq)
+            radio_engine['rx']=str(freq)
+            response = radio_engine.set_dmosetgroup()
+            print(response)
         return
 
     def set_tx(self):
         if 'nicerf' in self.radio_device:
             radio_engine = Sa828()
+            print("TXTXTXTX")
+            radio_engine.set_tx()
+        if 'dorji' in self.radio_device:
+            radio_engine = Dorji()
             print("TXTXTXTX")
             radio_engine.set_tx()
         return
